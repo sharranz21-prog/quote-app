@@ -55,7 +55,7 @@ BASE_TEMPLATE = '''
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f4f6f8; margin: 0; padding: 0; }
-        nav { background: #1e293b; padding: 1rem 2rem; display: flex; justify-space-between: space-between; align-items: center; color: white; }
+        nav { background: #1e293b; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; color: white; }
         nav a { color: #cbd5e1; text-decoration: none; margin-left: 1.5rem; font-weight: 500; }
         nav a:hover { color: white; }
         .container { max-width: 700px; margin: 2rem auto; padding: 0 1rem; }
@@ -293,7 +293,6 @@ def react(quote_id):
         conn.execute('INSERT INTO reactions (quote_id, username, emoji) VALUES (?, ?, ?)', (quote_id, session['username'], emoji))
         conn.commit()
     except sqlite3.IntegrityError:
-        # If user already reacted with this emoji, remove the reaction (toggle off)
         conn.execute('DELETE FROM reactions WHERE quote_id = ? AND username = ? AND emoji = ?', (quote_id, session['username'], emoji))
         conn.commit()
     finally:
@@ -317,3 +316,4 @@ def delete_quote(quote_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
